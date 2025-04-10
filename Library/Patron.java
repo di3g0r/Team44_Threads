@@ -16,24 +16,26 @@ public class Patron implements Runnable {
     public void run() {
         library.registerPatron(name);
         
-        // Perform random library actions
         for (int i = 0; i < 10; i++) {
             try {
-                // Get available books
-                List<String> availableBooks = library.getAvailableBookTitles();
+                List<String> allBooks = library.getAllBookTitles();
                 List<String> borrowedBooks = library.getBorrowedBooks(name);
                 
-                if (random.nextBoolean() && !availableBooks.isEmpty()) {
-                    // Borrow a book
-                    String bookToBorrow = availableBooks.get(random.nextInt(availableBooks.size()));
-                    library.borrowBook(name, bookToBorrow);
-                } else if (!borrowedBooks.isEmpty()) {
-                    // Return a book
-                    String bookToReturn = borrowedBooks.get(random.nextInt(borrowedBooks.size()));
-                    library.returnBook(name, bookToReturn);
+                // Randomly choose to borrow or return a book
+                if (random.nextBoolean()) {
+                    // Try to borrow any book 
+                    if (!allBooks.isEmpty()) {
+                        String bookToBorrow = allBooks.get(random.nextInt(allBooks.size()));
+                        library.borrowBook(name, bookToBorrow);
+                    }
+                } else {
+                    // Only return books the patron has actually borrowed
+                    if (!borrowedBooks.isEmpty()) {
+                        String bookToReturn = borrowedBooks.get(random.nextInt(borrowedBooks.size()));
+                        library.returnBook(name, bookToReturn);
+                    }
                 }
                 
-                // Sleep for random time
                 Thread.sleep(random.nextInt(1000));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
