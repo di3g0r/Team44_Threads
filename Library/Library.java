@@ -6,7 +6,7 @@ import java.util.Map;
 public class Library {
     private List<Book> books;
     private List<String> patrons;
-    private Map<String, List<Book>> borrowedBooks; // Map patron to their borrowed books
+    private Map<String, List<Book>> borrowedBooks; 
 
     public Library() {
         this.books = new ArrayList<>();
@@ -14,7 +14,6 @@ public class Library {
         this.borrowedBooks = new HashMap<>();
     }
 
-    // Register a new patron
     public synchronized void registerPatron(String patronName) {
         if (!patrons.contains(patronName)) {
             patrons.add(patronName);
@@ -25,13 +24,11 @@ public class Library {
         }
     }
 
-    // Add a new book to the library
     public synchronized void registerBook(String title) {
         books.add(new Book(title));
         System.out.println("Book '" + title + "' has been added to the library.");
     }
 
-    // A patron borrows a book
     public synchronized boolean borrowBook(String patronName, String bookTitle) {
         // Check if patron is registered
         if (!patrons.contains(patronName)) {
@@ -53,9 +50,7 @@ public class Library {
         return false;
     }
 
-    // A patron returns a book
     public synchronized boolean returnBook(String patronName, String bookTitle) {
-        // Check if patron is registered
         if (!patrons.contains(patronName)) {
             System.out.println(patronName + " is not registered and cannot return books.");
             return false;
@@ -77,7 +72,6 @@ public class Library {
         return false;
     }
 
-    // Get a list of all available book titles
     public synchronized List<String> getAvailableBookTitles() {
         List<String> titles = new ArrayList<>();
         for (Book book : books) {
@@ -88,7 +82,6 @@ public class Library {
         return titles;
     }
 
-    // Get a list of all book titles
     public synchronized List<String> getAllBookTitles() {
         List<String> titles = new ArrayList<>();
         for (Book book : books) {
@@ -97,7 +90,6 @@ public class Library {
         return titles;
     }
 
-    // Get books borrowed by a patron
     public synchronized List<String> getBorrowedBooks(String patronName) {
         if (!patrons.contains(patronName)) {
             return new ArrayList<>();

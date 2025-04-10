@@ -14,17 +14,15 @@ public class Patron implements Runnable {
 
     @Override
     public void run() {
-        // Register the patron
         library.registerPatron(name);
         
         // Perform random library actions
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             try {
                 // Get available books
                 List<String> availableBooks = library.getAvailableBookTitles();
                 List<String> borrowedBooks = library.getBorrowedBooks(name);
                 
-                // Randomly choose to borrow or return a book
                 if (random.nextBoolean() && !availableBooks.isEmpty()) {
                     // Borrow a book
                     String bookToBorrow = availableBooks.get(random.nextInt(availableBooks.size()));
@@ -35,7 +33,7 @@ public class Patron implements Runnable {
                     library.returnBook(name, bookToReturn);
                 }
                 
-                // Sleep for random time to simulate patron activity
+                // Sleep for random time
                 Thread.sleep(random.nextInt(1000));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();

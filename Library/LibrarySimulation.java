@@ -5,7 +5,6 @@ public class LibrarySimulation {
         // Create a library
         Library library = new Library();
         
-        // Add some books to the library
         String[] bookTitles = {
             "Java Programming", "Data Structures", "Algorithms", 
             "Design Patterns", "Clean Code"
